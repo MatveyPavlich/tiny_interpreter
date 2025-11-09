@@ -6,6 +6,7 @@ main:
 	gcc -std=c99 -Wall -Werror     \
 		-I./$(SRC_DIR)/intf    \
 		$(SRC_DIR)/impl/main.c \
+		$(SRC_DIR)/impl/lexer.c \
 		-o $(BUILD_DIR)/main 
 
 clean:
