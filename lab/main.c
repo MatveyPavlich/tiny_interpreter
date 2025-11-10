@@ -5,21 +5,23 @@
 #include <string.h>
 
 typedef enum {
-        T_NUM,
-        T_PLUS,
-        T_MINUS,
-        T_TIMES,
-        T_DIVIDE,
-        T_END,
-        T_ERROR
+        ADD_TOKEN,
+        SUB_TOKEN,
+        DIV_TOKEN,
+        MUL_TOKEN,
+        END_TOKEN,
+        ERR_TOKEN,
+        OPRND_TOKEN,
+        EXPRESSION_TOKEN
 } TokenType;
+
+typedef struct { char s } Lexer;
 
 typedef struct {
         TokenType t;
         double val;
 }
-
-typedef struct { const char *s } Lexer;
-
-static void skip_ws(Lexer *lx)
-        while(isspace((unsigned int)*lx->s)) lx->s++;
+        
+static void sp_skip(Lexer *lx) {
+        while (isspace((unsigned int)*lx->s)) lx->p++;
+}
