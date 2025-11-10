@@ -1,19 +1,34 @@
-// expr_repl.c  — C99
+// main.c  — C99
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 typedef enum {
-        T_NUM, T_PLUS, T_MINUS, T_STAR, T_SLASH, T_LPAREN, T_RPAREN, T_END, T_ERR
+        T_NUM,
+        T_PLUS,
+        T_MINUS,
+        T_STAR,
+        T_SLASH,
+        T_LPAREN,
+        T_RPAREN,
+        T_END,
+        T_ERR
 } TokType;
 
-typedef struct { TokType type; double num; } Token;
+typedef struct {
+        TokType type;
+        double num;
+} Token;
 
-typedef struct { const char *p; } Lexer;
+typedef struct {
+        const char *p;
+} Lexer;
 
 /* ---------- Lexer ---------- */
-static void skip_ws(Lexer *lx){ while (isspace((unsigned char)*lx->p)) lx->p++; }
+static void skip_ws(Lexer *lx){
+        while (isspace((unsigned char)*lx->p)) lx->p++;
+}
 
 static Token next_token(Lexer *lx){
         skip_ws(lx);
@@ -37,11 +52,11 @@ static Token next_token(Lexer *lx){
 }
 
 /* ---------- Recursive-descent parser + evaluator ----------
-Grammar:
-expr  := term (('+'|'-') term)*
-term  := factor (('*'|'/') factor)*
-factor:= NUMBER | '(' expr ')'
-*/
+** Grammar:
+** expr  := term (('+'|'-') term)*
+** term  := factor (('*'|'/') factor)*
+** factor:= NUMBER | '(' expr ')'
+** --------------------------------------------------------*/
 typedef struct {
         Lexer lx;
         Token cur;
@@ -49,7 +64,9 @@ typedef struct {
         char  msg[64];
 } Parser;
 
-static void advance(Parser *ps){ ps->cur = next_token(&ps->lx); }
+static void advance(Parser *ps){
+        ps->cur = next_token(&ps->lx);
+}
 
 static double parse_expr(Parser *ps); // fwd
 
