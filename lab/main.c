@@ -1,4 +1,6 @@
 // lab/main.c - C99
+#define _GNU_SOURCE
+#include <unistd.h>
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
@@ -27,6 +29,13 @@ typedef struct {
 // }
 
 int main(void) {
-        printf("Yo!!\n");
+        char buf[1024];
+        while (1) {
+                fputs("clc> ", stdout);
+                fgets(buf, sizeof buf, stdin);
+
+        }
         return 0;
 }
+
+
