@@ -15,13 +15,18 @@ typedef enum {
         EXPRESSION_TOKEN
 } TokenType;
 
-typedef struct { char s } Lexer;
+typedef struct { char s; } Lexer;
 
 typedef struct {
         TokenType t;
         double val;
-}
+} Token;
         
-static void sp_skip(Lexer *lx) {
-        while (isspace((unsigned int)*lx->s)) lx->p++;
+// static void sp_skip(Lexer *lx) {
+//         while (isspace((unsigned int)*lx->s)) lx->p++;
+// }
+
+int main(void) {
+        printf("Yo!!\n");
+        return 0;
 }
