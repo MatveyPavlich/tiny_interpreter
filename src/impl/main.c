@@ -28,12 +28,31 @@ typedef struct {
 //         while (isspace((unsigned int)*lx->s)) lx->p++;
 // }
 
+// int main(void) {
+//         char buf[1024];
+//         while (1) {
+//                 fputs("clc> ", stdout);
+//                 fgets(buf, sizeof buf, stdin);
+//
+//         }
+//         return 0;
+// }
 int main(void) {
         char buf[1024];
+
         while (1) {
                 fputs("clc> ", stdout);
-                fgets(buf, sizeof buf, stdin);
+                fflush(stdout);
 
+                if (!fgets(buf, sizeof buf, stdin))
+                        break;
+
+                buf[strcspn(buf, "\n")] = '\0';
+                if (buf[0] == '\0')
+                        continue;
+
+                printf("saved: \"%s\"\n", buf);
         }
+
         return 0;
 }
