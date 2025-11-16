@@ -17,32 +17,24 @@ typedef enum {
         EXPRESSION_TOKEN
 } TokenType;
 
-typedef struct { char s; } Lexer;
+typedef struct { const char *s; } Lexer;
 
 typedef struct {
         TokenType t;
         double val;
 } Token;
         
-// static void sp_skip(Lexer *lx) {
-//         while (isspace((unsigned int)*lx->s)) lx->p++;
-// }
+static void sp_skip(Lexer *lx) {
+        while (isspace((unsigned int)*lx->s)) lx->s++;
+}
 
-// int main(void) {
-//         char buf[1024];
-//         while (1) {
-//                 fputs("clc> ", stdout);
-//                 fgets(buf, sizeof buf, stdin);
-//
-//         }
-//         return 0;
-// }
 int main(void) {
         char buf[1024];
 
         while (1) {
                 fputs("clc> ", stdout);
-                fflush(stdout);
+                // fflush(stdout);
+                // redundant since read-before-write synchronisation
 
                 if (!fgets(buf, sizeof buf, stdin))
                         break;
@@ -50,8 +42,11 @@ int main(void) {
                 buf[strcspn(buf, "\n")] = '\0';
                 if (buf[0] == '\0')
                         continue;
+                Lexer l = {.s = buf};
+                sp_skip(&l);
 
-                printf("saved: \"%s\"\n", buf);
+                printf("saved: \"%s\"\n", l.s);
+                // printf("saved: \"%s\"\n", buf);
         }
 
         return 0;
