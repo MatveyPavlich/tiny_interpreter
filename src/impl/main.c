@@ -1,5 +1,6 @@
 // main.c  — C99
-#define _GNU_SOURCE
+// interpreter to evaluate single digit integer expressions 
+
 #include <unistd.h>
 #include <stdio.h>
 #include <ctype.h>
@@ -21,11 +22,24 @@ typedef struct { const char *s; } Lexer;
 
 typedef struct {
         TokenType t;
-        double val;
+        int val;
 } Token;
         
 static void sp_skip(Lexer *lx) {
         while (isspace((unsigned int)*lx->s)) lx->s++;
+}
+
+static Token generate_token(Lexer *lx) {
+        sp_skip(lx);
+        
+        char c = *lx->s;
+        if (c == '\0')
+                return (Token){.t = END_TOKEN, .val = 0};
+        if (isdigit((unsigned char)c)) {
+                int v = atoi(c);
+                return (Token){.t = OPRND_TOKEN, .val = v};
+        }
+
 }
 
 int main(void) {
