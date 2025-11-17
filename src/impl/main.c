@@ -31,6 +31,9 @@ typedef struct {
 static void sp_skip(Lexer *lx) {
         while (isspace((unsigned int)*lx->s)) lx->s++;
 }
+// static void sk_space(Lexer *lx)
+//         return if (is_space((unsigned char)lx->s) == 0) lx->s++;
+
 
 static Token generate_token(Lexer *lx) {
         sp_skip(lx);
@@ -94,7 +97,6 @@ int main(void) {
                 if (buf[0] == '\0')
                         continue;
                 Lexer l = {.s = buf};
-                // sp_skip(&l);
 
                 Token tokens[MAX_EXPR_LEN];
                 int n = tokenise(&l, tokens, MAX_EXPR_LEN);
@@ -106,8 +108,18 @@ int main(void) {
                 printf("\n");
 
                 printf("saved: \"%s\"\n", l.s);
-                // printf("saved: \"%s\"\n", buf);
         }
 
         return 0;
 }
+
+/*
+// Trial rewrite from memory
+int main(void) {
+        fputs("calc >", stdout);
+        fflush(stdout) // not must since will be flushed anyway
+        
+        char buffer[1024];
+        if (fgets(buffer, sizeof(buffer), stdin) break;
+}
+*/
