@@ -1,1 +1,1 @@
-int parser(void);
+int parse(Token *toks, int n);

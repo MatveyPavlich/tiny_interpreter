@@ -26,7 +26,6 @@ int main(void) {
                         continue;
 
                 Lexer l = {.s = buf};
-                parser();
                 interpret(l);
         }
 

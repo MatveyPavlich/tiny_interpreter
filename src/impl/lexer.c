@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "lexer.h"
+#include "parser.h"
 
 #define MAX_EXPR_LEN 100
 
@@ -68,5 +69,9 @@ int interpret(Lexer l) {
         printf("\n");
 
         printf("saved: \"%s\"\n", l.s);
+
+        int result = parse(tokens, n);
+        printf("= %d\n", result);
+
         return 0;
 }
