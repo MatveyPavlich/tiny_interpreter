@@ -1,8 +1,9 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
-
 #include "lexer.h"
+
+#define MAX_EXPR_LEN 100
 
 static void sp_skip(Lexer *lx) {
         while (isspace((unsigned int)*lx->s)) lx->s++;
@@ -34,8 +35,7 @@ static Token generate_token(Lexer *lx) {
         }
 }
 
-// static int tokenise(Lexer *lx, Token out[], int max) {
-int tokenise(Lexer *lx, Token out[], int max) {
+static int tokenise(Lexer *lx, Token out[], int max) {
         int count = 0;
 
         while (count < max) {
@@ -56,6 +56,17 @@ int tokenise(Lexer *lx, Token out[], int max) {
         return count;
 }
 
-// static int interpret() {
-//         return 0;
-// }
+int interpret(Lexer l) {
+
+        Token tokens[MAX_EXPR_LEN];
+        int n = tokenise(&l, tokens, MAX_EXPR_LEN);
+
+        printf("tokens: ");
+        for (int i = 0; i < n; i++) {
+                printf("[%d:%d] ", tokens[i].t, tokens[i].val);
+        }
+        printf("\n");
+
+        printf("saved: \"%s\"\n", l.s);
+        return 0;
+}

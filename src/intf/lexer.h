@@ -17,5 +17,4 @@ typedef struct {
         int val;
 } Token;
 
-// static int tokenise(Lexer *lx, Token out[], int max);
-int tokenise(Lexer *lx, Token out[], int max);
+int interpret(Lexer l);

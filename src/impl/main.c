@@ -8,8 +8,6 @@
 #include <string.h>
 #include "lexer.h"
 
-#define MAX_EXPR_LEN 100
-
 int main(void) {
         // REPL loop
         char buf[1024];
@@ -25,19 +23,9 @@ int main(void) {
                 buf[strcspn(buf, "\n")] = '\0';
                 if (buf[0] == '\0')
                         continue;
-                // interpret() should output what is interpreted
+
                 Lexer l = {.s = buf};
-
-                Token tokens[MAX_EXPR_LEN];
-                int n = tokenise(&l, tokens, MAX_EXPR_LEN);
-
-                printf("tokens: ");
-                for (int i = 0; i < n; i++) {
-                        printf("[%d:%d] ", tokens[i].t, tokens[i].val);
-                }
-                printf("\n");
-
-                printf("saved: \"%s\"\n", l.s);
+                interpret(l);
         }
 
         return 0;
