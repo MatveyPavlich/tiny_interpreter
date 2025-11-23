@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "lexer.h"
+#include "parser.h"
 
 int main(void) {
         // REPL loop
@@ -25,6 +26,7 @@ int main(void) {
                         continue;
 
                 Lexer l = {.s = buf};
+                parser();
                 interpret(l);
         }
 
