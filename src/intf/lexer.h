@@ -1,18 +1,21 @@
 typedef enum {
-        TOKEN_NUMBER,
-        TOKEN_PLUS,
-        TOKEN_MINUS,
-        TOKEN_STAR,
-        TOKEN_SLASH,
-        TOKEN_LPAREN,
-        TOKEN_RPAREN,
-        TOKEN_END,
-        TOKEN_INVALID
+        T_NUM,
+        T_PLUS,
+        T_MINUS,
+        T_STAR,
+        T_SLASH,
+        T_LPAREN,
+        T_RPAREN,
+        T_END,
+        T_ERR
 } TokenType;
 
+typedef struct { const char *s; } Lexer;
+
 typedef struct {
-        TokenType type;
-        char text[32];   // token text (for numbers or debugging)
+        TokenType t;
+        int val;
 } Token;
 
-Token next_token(const char **input);
+// static int tokenise(Lexer *lx, Token out[], int max);
+int tokenise(Lexer *lx, Token out[], int max);

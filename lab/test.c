@@ -6,6 +6,7 @@ int main(void) {
         // scanf("%d", &a);
         // printf("Your age is %d\n", a);
 
+        // TODO: figure out how to not print the whole buffer
         char buffer[100];
         fputs("Enter your age: ", stdout);
         fflush(stdout);
