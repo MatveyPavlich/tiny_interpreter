@@ -7,7 +7,8 @@ typedef enum {
         T_LPAREN,
         T_RPAREN,
         T_END,
-        T_ERR
+        T_ERR,
+        T_EXPRS,
 } TokenType;
 
 typedef struct { const char *s; } Lexer;
