@@ -17,7 +17,7 @@ typedef struct {
         struct Expr *rigth;
 } Expr;
 
-int parse(Token *toks, int n) {
+int parse(void) {
         // Public API to the parser
         Expr test_expr;
         (void) test_expr;

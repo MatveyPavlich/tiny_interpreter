@@ -14,16 +14,17 @@ typedef enum {
 } TokenType;
 
 typedef struct { const char *s; } Buffer;
-typedef struct {
-        Token tokens[MAX_EXPR_LEN];
-        int parser_pos;
-        int token_count;
-        const char *s buf;
-} Lexer;
 
 typedef struct {
         TokenType t;
         int val;
 } Token;
 
-Lexer interpret(Lexer l);
+typedef struct {
+        Token tokens[MAX_EXPR_LEN];
+        int parser_pos;
+        int token_count;
+        const char *buf;
+} Lexer;
+
+int interpret(Buffer l);

@@ -25,8 +25,8 @@ int main(void) {
                 if (buf[0] == '\0')
                         continue;
 
-                Lexer l = {.s = buf};
-                interpret(l);
+                Buffer b = {.s = buf};
+                interpret(b);
         }
 
         return 0;
