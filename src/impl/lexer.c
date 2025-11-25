@@ -1,6 +1,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "lexer.h"
 #include "parser.h"
 
@@ -36,41 +37,46 @@ static Token generate_token(Buffer *lx) {
         }
 }
 
-static int tokenise(Buffer *lx, Token out[], int max) {
-        int count = 0;
+static Lexer* tokenise(Buffer *bf) {
+        Lexer *lx = malloc(sizeof(Lexer));
+        if (lx == 0) {
+                printf("malloc failed on the Lexer allocation\n");
+                return 0;
+        }
 
-        while (count < max) {
-                Token t = generate_token(lx);
-                out[count++] = t;
+        lx->token_count = 0;
+        lx->buf = bf->s;
+
+        while (lx->token_count < MAX_EXPR_LEN) {
+                Token t = generate_token(bf);
+                lx->tokens[lx->token_count++] = t;
+                lx->token_count++;
 
                 if (t.t == T_ERR) {
                         printf("error: invalid token\n");
-                        return count;
+                        return lx;
                 }
                 if (t.t == T_END) {
                         printf("end reached\n");
-                        return count;
+                        return lx;
                 }
         }
 
         printf("error: too many tokens\n");
-        return count;
+        return lx;
 }
 
 int interpret(Buffer l) {
 
-        Token tokens[MAX_EXPR_LEN];
-        int n = tokenise(&l, tokens, MAX_EXPR_LEN);
+        Lexer *lx = tokenise(&l);
 
         printf("tokens: ");
-        for (int i = 0; i < n; i++) {
-                printf("[%d:%d] ", tokens[i].t, tokens[i].val);
+        for (int i = 0; i < lx->token_count; i++) {
+                printf("[%d:%d] ", (lx->tokens[i]).t, (lx->tokens[i]).val);
         }
         printf("\n");
 
-        printf("saved: \"%s\"\n", l.s);
-
-        int result = parse(tokens, n);
+        int result = parse(lx->tokens, lx->token_count);
         printf("= %d\n", result);
 
         return 0;
