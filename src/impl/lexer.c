@@ -6,11 +6,11 @@
 
 #define MAX_EXPR_LEN 100
 
-static void sp_skip(Lexer *lx) {
+static void sp_skip(Buffer *lx) {
         while (isspace((unsigned int)*lx->s)) lx->s++;
 }
 
-static Token generate_token(Lexer *lx) {
+static Token generate_token(Buffer *lx) {
         sp_skip(lx);
 
         char c = *lx->s;
@@ -36,7 +36,7 @@ static Token generate_token(Lexer *lx) {
         }
 }
 
-static int tokenise(Lexer *lx, Token out[], int max) {
+static int tokenise(Buffer *lx, Token out[], int max) {
         int count = 0;
 
         while (count < max) {
@@ -57,7 +57,7 @@ static int tokenise(Lexer *lx, Token out[], int max) {
         return count;
 }
 
-int interpret(Lexer l) {
+int interpret(Buffer l) {
 
         Token tokens[MAX_EXPR_LEN];
         int n = tokenise(&l, tokens, MAX_EXPR_LEN);

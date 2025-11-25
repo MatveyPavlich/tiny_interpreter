@@ -1,3 +1,5 @@
+#define MAX_EXPR_LEN 100
+
 typedef enum {
         T_NUM,
         T_PLUS,
@@ -11,11 +13,17 @@ typedef enum {
         T_EXPRS,
 } TokenType;
 
-typedef struct { const char *s; } Lexer;
+typedef struct { const char *s; } Buffer;
+typedef struct {
+        Token tokens[MAX_EXPR_LEN];
+        int parser_pos;
+        int token_count;
+        const char *s buf;
+} Lexer;
 
 typedef struct {
         TokenType t;
         int val;
 } Token;
 
-int interpret(Lexer l);
+Lexer interpret(Lexer l);
