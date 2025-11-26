@@ -75,8 +75,8 @@ int interpret(Buffer l) {
         }
         printf("\n");
 
-        int result = parse(lx->tokens, lx->token_count);
-        printf("= %d\n", result);
+        Expr expression = parse(lx);
+        printf("= %d\n", expression->val);
 
         return 0;
 }
