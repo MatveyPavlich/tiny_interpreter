@@ -7,24 +7,24 @@
 
 #define MAX_EXPR_LEN 100
 
-static void sp_skip(Buffer *lx) {
-        while (isspace((unsigned int)*lx->s)) lx->s++;
+static void sp_skip(Buffer *bf) {
+        while (isspace((unsigned int)*bf->s)) bf->s++;
 }
 
-static Token generate_token(Buffer *lx) {
-        sp_skip(lx);
+static Token generate_token(Buffer *bf) {
+        sp_skip(bf);
 
-        char c = *lx->s;
+        char c = *bf->s;
         if (c == '\0')
                 return (Token){ T_END, 0 };
 
         if (isdigit((unsigned char)c)) {
                 int v = c - '0';  
-                lx->s++; 
+                bf->s++; 
                 return (Token){ T_NUM, v };
         }
 
-        lx->s++;
+        bf->s++;
 
         switch (c) {
                 case '+': return (Token){ T_PLUS,   0 };
@@ -49,8 +49,7 @@ static Lexer* tokenise(Buffer *bf) {
 
         while (lx->token_count < MAX_EXPR_LEN) {
                 Token t = generate_token(bf);
-                lx->tokens[lx->token_count++] = t;
-                lx->token_count++;
+                lx->tokens[lx->token_count++] = t; // increments count as well
 
                 if (t.t == T_ERR) {
                         printf("error: invalid token\n");

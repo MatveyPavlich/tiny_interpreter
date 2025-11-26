@@ -6,7 +6,6 @@
 
 //TODO: Iterate through tokens and create a treee structure
 //TODO: incorportate bind_power to each token
-//TODO: Make sure Lexer type stores an array of tokens rather than a string
 
 typedef enum {atom, expr } NodeType;
 
