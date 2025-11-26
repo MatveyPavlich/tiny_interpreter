@@ -5,10 +5,9 @@
 
 #define MAX_EXPR_LEN 100
 
+//TODO: For some reason Expr type is not visible, fix it
 //TODO: incorportate bind_power to each token
 //TODO: Iterate through tokens and create a tree structure
-
-
 
 static int lbp(TokenType t) {
         switch (t) {

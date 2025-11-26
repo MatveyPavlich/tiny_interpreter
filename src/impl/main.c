@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "lexer.h"
-#include "parser.h"
 
 int main(void) {
         // REPL loop

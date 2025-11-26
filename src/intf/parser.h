@@ -7,4 +7,4 @@ typedef struct expr {
         struct expr *right;
 } Expr;
 
-Expr *parse(Lexer *lx)
+Expr *parse(Lexer *lx);
