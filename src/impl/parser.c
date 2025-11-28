@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "lexer.h"
+#include "parser.h"
 
 #define MAX_EXPR_LEN 100
 
@@ -31,10 +32,10 @@ static Expr *nud(Lexer *lx, Token t) {
 
         if (t.t == T_LPAREN) {
                 Expr *inside = parse_bp(lx, 0);
-                if (lx->tokens[lx->pos].t != T_RPAREN) {
+                if (lx->tokens[lx->parser_pos].t != T_RPAREN) {
                         printf("error: missing ')'\n");
                 } else {
-                        lx->pos++;
+                        lx->parser_pos++;
                 }
                 return inside;
         }
@@ -68,17 +69,17 @@ static Expr *led(Lexer *lx, Token t, Expr *left) {
 }
 
 static Expr *parse_bp(Lexer *lx, int min_bp) {
-        Token t = lx->tokens[lx->pos++];
+        Token t = lx->tokens[lx->parser_pos++];
         Expr *left = nud(lx, t);
 
         while (1) {
-                Token look = lx->tokens[lx->pos];
+                Token look = lx->tokens[lx->parser_pos];
                 int bp = lbp(look.t);
 
                 if (bp <= min_bp)
                         break;
 
-                lx->pos++; // consume operator
+                lx->parser_pos++; // consume operator
                 left = led(lx, look, left);
         }
 
@@ -86,7 +87,7 @@ static Expr *parse_bp(Lexer *lx, int min_bp) {
 }
 
 Expr *parse(Lexer *lx) {
-        lx->pos = 0;
+        lx->parser_pos = 0;
         return parse_bp(lx, 0);
 }
 // int parse(Lexer *lx) {
