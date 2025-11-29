@@ -14,6 +14,7 @@ static Expr *nud(Lexer *lx, Token t);
 static Expr *led(Lexer *lx, Token t, Expr *left);
 
 Expr *parse(Lexer *lx) {
+        // Public API to the parser
         lx->parser_pos = 0;
         return parse_bp(lx, 0);
 }
@@ -37,7 +38,6 @@ static Expr *parse_bp(Lexer *lx, int min_bp) {
         return left;
 }
 
-
 static int lbp(TokenType t) {
         // Assign binding power to each operator
         switch (t) {
@@ -48,7 +48,6 @@ static int lbp(TokenType t) {
                 default:       return 0;
         }
 }
-
 
 static Expr *nud(Lexer *lx, Token t) {
         // Null denotation (evaluating opperands/parentethis)
