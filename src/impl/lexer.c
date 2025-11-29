@@ -75,7 +75,7 @@ int interpret(Buffer l) {
         }
         printf("\n");
 
-        Expr expression = parse(lx);
+        Expr *expression = parse(lx);
         printf("= %d\n", expression->val);
 
         return 0;

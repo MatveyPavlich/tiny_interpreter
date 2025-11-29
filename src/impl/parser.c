@@ -20,6 +20,8 @@ static int lbp(TokenType t) {
         }
 }
 
+static Expr *parse_bp(Lexer *lx, int min_bp);
+
 static Expr *nud(Lexer *lx, Token t) {
         Expr *node = malloc(sizeof(Expr));
 
