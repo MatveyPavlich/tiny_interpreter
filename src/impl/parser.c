@@ -6,23 +6,52 @@
 
 #define MAX_EXPR_LEN 100
 
-//TODO: For some reason Expr type is not visible, fix it
-//TODO: incorportate bind_power to each token
-//TODO: Iterate through tokens and create a tree structure
+// TODO: go through the code and understand it 0_o
+// Forward declarations
+static Expr *parse_bp(Lexer *lx, int min_bp);
+static int lbp(TokenType t);
+static Expr *nud(Lexer *lx, Token t);
+static Expr *led(Lexer *lx, Token t, Expr *left);
+
+Expr *parse(Lexer *lx) {
+        lx->parser_pos = 0;
+        return parse_bp(lx, 0);
+}
+
+static Expr *parse_bp(Lexer *lx, int min_bp) {
+        // Main loop in the parsing algorithm
+        Token t = lx->tokens[lx->parser_pos++];
+        Expr *left = nud(lx, t);
+
+        while (1) {
+                Token look = lx->tokens[lx->parser_pos];
+                int bp = lbp(look.t);
+
+                if (bp <= min_bp)
+                        break;
+
+                lx->parser_pos++; // consume operator
+                left = led(lx, look, left);
+        }
+
+        return left;
+}
+
 
 static int lbp(TokenType t) {
+        // Assign binding power to each operator
         switch (t) {
-                case T_PLUS:  return 10;
-                case T_MINUS: return 10;
-                case T_STAR:  return 20;
-                case T_SLASH: return 20;
-                default:      return 0;
+                case T_PLUS:   return 10;
+                case T_MINUS:  return 10;
+                case T_STAR:   return 20;
+                case T_SLASH:  return 20;
+                default:       return 0;
         }
 }
 
-static Expr *parse_bp(Lexer *lx, int min_bp);
 
 static Expr *nud(Lexer *lx, Token t) {
+        // Null denotation (evaluating opperands/parentethis)
         Expr *node = malloc(sizeof(Expr));
 
         if (t.t == T_NUM) {
@@ -48,6 +77,7 @@ static Expr *nud(Lexer *lx, Token t) {
 }
 
 static Expr *led(Lexer *lx, Token t, Expr *left) {
+        // Left denotation (evaluating operations)
         Expr *node = malloc(sizeof(Expr));
         node->type = expr;
         node->left = left;
@@ -70,34 +100,4 @@ static Expr *led(Lexer *lx, Token t, Expr *left) {
         return node;
 }
 
-static Expr *parse_bp(Lexer *lx, int min_bp) {
-        Token t = lx->tokens[lx->parser_pos++];
-        Expr *left = nud(lx, t);
 
-        while (1) {
-                Token look = lx->tokens[lx->parser_pos];
-                int bp = lbp(look.t);
-
-                if (bp <= min_bp)
-                        break;
-
-                lx->parser_pos++; // consume operator
-                left = led(lx, look, left);
-        }
-
-        return left;
-}
-
-Expr *parse(Lexer *lx) {
-        lx->parser_pos = 0;
-        return parse_bp(lx, 0);
-}
-// int parse(Lexer *lx) {
-//         // Public API to the parser
-//         Expr test_expr;
-//         (void)lx;
-//         (void) test_expr;
-//         printf("yoo!\n");
-//         return 0;
-// }
-//
