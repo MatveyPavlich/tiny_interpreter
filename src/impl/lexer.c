@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "lexer.h"
 #include "parser.h"
+#include "visualiser.h"
 
 #define MAX_EXPR_LEN 100
 
@@ -76,6 +77,7 @@ int interpret(Buffer l) {
         printf("\n");
 
         Expr *expression = parse(lx);
+        print_ast(expression, 0);
         printf("= %d\n", expression->val);
 
         return 0;

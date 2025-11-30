@@ -1,4 +1,4 @@
-typedef enum {atom, expr } NodeType;
+typedef enum { atom, expr } NodeType;
 
 typedef struct expr {
         NodeType type;

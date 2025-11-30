@@ -8,6 +8,7 @@ main:
 		$(SRC_DIR)/impl/main.c   \
 		$(SRC_DIR)/impl/lexer.c  \
 		$(SRC_DIR)/impl/parser.c \
+		$(SRC_DIR)/impl/visualiser.c \
 		-o $(BUILD_DIR)/main 
 	# gcc -std=c99 -Wall -Werror     \
 	# 	-I./$(LAB_DIR)/intf    \
