@@ -66,19 +66,34 @@ static Lexer* tokenise(Buffer *bf) {
         return lx;
 }
 
+int eval(Expr *e) {
+        if (e->type == atom)
+                return e->val;
+
+        int left = eval(e->left);
+        int right = eval(e->right);
+
+        switch ((char)e->val) {
+                case '+': return left + right;
+                case '-': return left - right;
+                case '*': return left * right;
+                case '/': return left / right;
+        }
+
+        return 0;
+}
 int interpret(Buffer l) {
 
         Lexer *lx = tokenise(&l);
-
-        printf("tokens: ");
-        for (int i = 0; i < lx->token_count; i++) {
-                printf("[%d:%d] ", (lx->tokens[i]).t, (lx->tokens[i]).val);
-        }
-        printf("\n");
-
         Expr *expression = parse(lx);
-        print_ast(expression, 0);
-        printf("= %d\n", expression->val);
+        int result = eval(expression);
 
-        return 0;
+        // Debugging prints
+        printf("tokens: ");
+        for (int i = 0; i < lx->token_count; i++)
+                printf("[%d:%d] ", (lx->tokens[i]).t, (lx->tokens[i]).val);
+        printf("\n");
+        print_ast(expression, 0); 
+
+        return result;
 }

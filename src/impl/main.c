@@ -25,7 +25,7 @@ int main(void) {
                         continue;
 
                 Buffer b = {.s = buf};
-                interpret(b);
+                printf("= %d\n", interpret(b));
         }
 
         return 0;
