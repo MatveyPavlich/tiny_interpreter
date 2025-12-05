@@ -6,9 +6,6 @@
 
 #define MAX_EXPR_LEN 100
 
-// TODO: go through the code and understand it 0_o
-// TODO: find why the expression value is wrong
-
 // Forward declarations
 static Expr *parse_bp(Lexer *lx, int min_bp);
 static int lbp(TokenType t);
